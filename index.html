@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 { text-align: center; margin-bottom: 20px; }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover { background: #45a049; }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Contact Form</h2>
+  <form id="contact-form">
+    <input type="text" name="name" placeholder="নাম" required>
+    <input type="email" name="email" placeholder="ইমেইল" required>
+    <textarea name="message" placeholder="মেসেজ" rows="5" required></textarea>
+    <button type="submit">Send</button>
+  </form>
+</div>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  // EmailJS Public Key
+  (function(){
+    emailjs.init("fJG7nRWI9nWXJdFwP"); // <-- এখানে বসান আপনার Public Key
+  })();
+
+  // ফর্ম সাবমিশন হ্যান্ডলার
+  document.getElementById("contact-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // পেজ reload বন্ধ
+
+    emailjs.sendForm(
+      "service_hseoh3p",   // <-- এখানে বসান Service ID
+      "template_m0luu0g",  // <-- এখানে বসান Template ID
+      this
+    ).then(
+      function() {
+        alert("Email সফলভাবে পাঠানো হয়েছে! 📩");
+        document.getElementById("contact-form").reset(); // ফর্ম রিসেট
+      },
+      function(error) {
+        alert("Error: Email পাঠানো হয়নি! ❌");
+        console.log(error);
+      }
+    );
+  });
+</script>
+
+</body>
+</html>
